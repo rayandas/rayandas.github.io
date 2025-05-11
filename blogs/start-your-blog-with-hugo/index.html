@@ -1,0 +1,76 @@
+<!doctype html><html lang=en><head><link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel=stylesheet></head><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Rayan Das"><link rel="shortcut icon" href=https://rayandas.in/favicon.ico><link rel=stylesheet href=/css/style.min.css><link rel=canonical href=https://rayandas.in/blogs/start-your-blog-with-hugo/><title>Start Your Blog With Hugo</title></head><body><header id=banner><h2><a href=https://rayandas.in/>Rayan Das</a></h2><nav><ul><li><a href=/ title=about>about</a></li><li><a href=/blogs/ title=blogs>blogs</a></li><li><a href=/contact/ title=contact>contact</a></li><li><a href=/talks/ title=talks>talks</a></li></ul></nav></header><main id=content><article><header id=post-header><h1>Start Your Blog With Hugo</h1><div><time>May 23, 2020</time></div></header><p>A detailed steps to start your own blog site using Hugo from zero to deployment.</p><p>Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again.</p><p>I love Hugo because it&rsquo;s fast, is has Go at the core. Install in seconds, build in milliseconds. Hugo works on macOS, Windows, Linux, FreeBSD, and others. Host on any server or your favorite CDN.</p><p>Hugo is amazing, especially if you are a developer and you’re willing to write in Markdown. Non-tech people might just refuse to use Markdown, and it’s perfectly understandable.</p><p>Also, you have to be prepared for a Git-centric workflow to make things really quick.</p><p>Anyway, enough with words.</p><p>What you do is that you write a post using Markdown, then commit your changes to a Git repository, most commonly on GitHub, and some glue technology deploys the changes on the server that hosts the site.</p><h3 id=install-hugo>Install Hugo</h3><p>Mac OS:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ brew install hugo
+</span></span></code></pre></div><p>If you don&rsquo;t have brew on your Mac install <a href=https://brew.sh/>Homebrew</a>
+Linux:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ snap install hugo
+</span></span></code></pre></div><p>Windows:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ choco install hugo -confirm
+</span></span></code></pre></div><h3 id=create-a-hugo-site>Create a Hugo Site</h3><p>Once Hugo is installed, create a hugo site by running</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ hugo new site hugo-blog
+</span></span></code></pre></div><p>The command will create a new <code>hugo-blog</code> directory.</p><h3 id=time-to-pick-a-theme>Time to Pick a Theme</h3><p>You need to pick a theme before you can start. You can find all the themes <a href=https://themes.gohugo.io/>here</a>.
+I have used <a href=https://themes.gohugo.io/etch/>Etch</a>
+I will recommend avoiding the <code>git clone</code> workflow they suggest on the page, because you can modify the theme according to you in the future. Better to fork the theme and use the forked repository in your hugo site.</p><p>So go to your forked repository, copy <code>git@github.com:username/theme.git</code> and add it as a submodule under <code>themes</code> dir.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ git submodule add https://github.com/username/theme.git
+</span></span></code></pre></div><h3 id=add-content-to-your-blog>Add Content to Your Blog</h3><p>In this step we&rsquo;ll add content to our blog. Hugo simplify this process.
+To add content in blog page:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ hugo new posts/first-post.md
+</span></span></code></pre></div><p>The newly created content file will start like this</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>---
+</span></span><span class=line><span class=cl>title: <span class=s2>&#34;First Post&#34;</span>
+</span></span><span class=line><span class=cl>date: 2020-08-02T08:47:11+01:00
+</span></span><span class=line><span class=cl>draft: <span class=nb>true</span>
+</span></span><span class=line><span class=cl>---
+</span></span></code></pre></div><h3 id=the-configuration>The Configuration</h3><p>To configure Hugo we use a configuration file. That file is located in our Hugo site root dir and can be in TOLM (config.toml), YAML (config.yaml) or JSON (config.json) format.</p><p>The config.toml in my case looks like</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>baseURL</span> <span class=o>=</span> <span class=s2>&#34;https://rayandas.in/&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>languageCode</span> <span class=o>=</span> <span class=s2>&#34;en-us&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>title</span> <span class=o>=</span> <span class=s2>&#34;Rayan Das&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>theme</span> <span class=o>=</span> <span class=s2>&#34;etch&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>enableInlineShortcodes</span> <span class=o>=</span> <span class=nb>true</span>
+</span></span><span class=line><span class=cl><span class=nv>pygmentsCodeFences</span> <span class=o>=</span> <span class=nb>true</span>
+</span></span><span class=line><span class=cl><span class=nv>pygmentsUseClasses</span> <span class=o>=</span> <span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>params<span class=o>]</span>
+</span></span><span class=line><span class=cl>  <span class=nv>description</span> <span class=o>=</span> <span class=s2>&#34;Personal web space.&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nv>copyright</span> <span class=o>=</span> <span class=s2>&#34;Copyright © 2020 Rayan Das&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nv>dark</span> <span class=o>=</span> <span class=s2>&#34;off&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nv>highlight</span> <span class=o>=</span> <span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>menu<span class=o>]</span>
+</span></span><span class=line><span class=cl>  <span class=o>[[</span>menu.main<span class=o>]]</span>
+</span></span><span class=line><span class=cl>    <span class=nv>identifier</span> <span class=o>=</span> <span class=s2>&#34;blogs&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>name</span> <span class=o>=</span> <span class=s2>&#34;blogs&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>title</span> <span class=o>=</span> <span class=s2>&#34;blogs&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>url</span> <span class=o>=</span> <span class=s2>&#34;/blogs/&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nv>weight</span> <span class=o>=</span> <span class=m>10</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>permalinks<span class=o>]</span>
+</span></span><span class=line><span class=cl>  <span class=nv>posts</span> <span class=o>=</span> <span class=s2>&#34;/:title/&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>markup.goldmark.renderer<span class=o>]</span>
+</span></span><span class=line><span class=cl>  <span class=c1># Allows HTML in Markdown</span>
+</span></span><span class=line><span class=cl>  <span class=nv>unsafe</span> <span class=o>=</span> <span class=nb>true</span>
+</span></span></code></pre></div><p>I recommend you to configure is as per your requirement.</p><h3 id=run-the-server>Run the Server</h3><p>Now that we&rsquo;ve configured almost everything, we will run the server.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ hugo server
+</span></span></code></pre></div><p>The site is running on your localhost now. Open <code>http://localhost:1313</code> in your browser to see the site.</p><p>If everything works well, congratulations. Your site is up!</p><h3 id=configure-hugo-version-in-netlify>Configure Hugo Version in Netlify</h3><p>You need to set Hugo version for your environments in <code>netlify.toml</code> file.
+The Netlify configuration file can be a little hard to understand and get right for the different environment, and you may get some inspiration and tips from this site’s <code>netlify.toml</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>build<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>publish</span> <span class=o>=</span> <span class=s2>&#34;public&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> <span class=o>=</span> <span class=s2>&#34;hugo --gc --minify&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>context.production.environment<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>HUGO_VERSION</span> <span class=o>=</span> <span class=s2>&#34;0.74.3&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>HUGO_ENV</span> <span class=o>=</span> <span class=s2>&#34;production&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>HUGO_ENABLEGITINFO</span> <span class=o>=</span> <span class=s2>&#34;true&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>context.split1<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> <span class=o>=</span> <span class=s2>&#34;hugo --gc --minify --enableGitInfo&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>context.split1.environment<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>HUGO_VERSION</span> <span class=o>=</span> <span class=s2>&#34;0.74.3&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>HUGO_ENV</span> <span class=o>=</span> <span class=s2>&#34;production&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>context.deploy-preview<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> <span class=o>=</span> <span class=s2>&#34;hugo --gc --minify --buildFuture -b </span><span class=nv>$DEPLOY_PRIME_URL</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>context.deploy-preview.environment<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>HUGO_VERSION</span> <span class=o>=</span> <span class=s2>&#34;0.74.3&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>context.branch-deploy<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> <span class=o>=</span> <span class=s2>&#34;hugo --gc --minify -b </span><span class=nv>$DEPLOY_PRIME_URL</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>context.branch-deploy.environment<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>HUGO_VERSION</span> <span class=o>=</span> <span class=s2>&#34;0.74.3&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>context.next.environment<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>HUGO_ENABLEGITINFO</span> <span class=o>=</span> <span class=s2>&#34;true&#34;</span>
+</span></span></code></pre></div><h3 id=deploy-your-hugo-site-on-netlify>Deploy your Hugo Site on netlify</h3><p>First, you need to create a GitHub repository and push everything to the repository. You can keep the repo private, ofcourse.</p><p>Once the repo is on GitHub, we can move to Netlify. From the Netlify dashboard, click the &lsquo;New site from GitHub&rsquo; button.</p><p>Click GitHub, authorized Netlify to access your private repositories, then pick the repo you just created. Netlify automatically identified it as a Hugo repo, and entered the build command automatically.</p><p>Selecting “Deploy site” will immediately take you to a terminal for your build. Once the build is finished—this should only take a few seconds.</p><p>Now every time you push changes to your hosted git repository, Netlify will rebuild and redeploy your site.</p><h3 id=have-fun>Have Fun</h3><p>The best way to learn something is to play with it.</p></article></main><footer id=footer>Copyright © 2025 Rayan Das</footer></body></html>
