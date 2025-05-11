@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel="stylesheet">
+ </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I work to prevent outages and I am obsessive about the science of uptime and measurement.">
+    
+    <link rel="shortcut icon" href="https://rayandas.in/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <link rel="canonical" href="https://rayandas.in/blogs/reverse-proxy/" />
+    <title>Reverse Proxy</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://rayandas.in/">Rayan Das</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="about">about</a>
+            </li><li>
+                <a href="/blogs/" title="blogs">blogs</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li><li>
+                <a href="/talks/" title="talks">talks</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>Reverse Proxy</h1>
+        <div>
+                <time>May 30, 2020</time>
+            </div>
+    </header><p>Let’s first talk about what’s a proxy. A proxy is a server that accepts connections from clients, which actively configured the proxy server on their machines, in their network settings.</p>
+<p>When a client makes a connection to a server, the requests always pass through that proxy server.</p>
+<p>This practice has several uses. Companies and organizations can set up proxy servers to filter connections, provide more security, and log traffic. Without using the proxy, clients can’t reach the outside network. Proxy servers are also useful to provide privacy.</p>
+<p>A reverse proxy on the other hand is set up by the server. It’s completely transparent to clients, they don’t know this middleman exists, but it does a very useful job on the servers, filtering requests and sending them to the appropriate service that handles them.</p>
+<p>It’s common to use Nginx as a reverse proxy, and have services listening on internal ports, unaccessible from the outside.</p>
+<p>Nginx in this case serves as the main request handler, and sends the appropriate requests, for example linking special subfolders or URLs to specific services.</p>
+<p>We can have 2 or more different Python apps doing different things, and the user does not need to know about that.</p>
+<p>Reverse proxies are typically implemented to help increase security, performance, and reliability.</p>
+<p>Beside this routing functionality, which is what us developers will mostly use it for, reverse proxies are also great to filter and protect from attacks serving as a firewall, to introduce caching, to configure SSL, to handle load balancing, to set rate limiting, and much more.</p>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2025 Rayan Das
+</footer>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel="stylesheet">
+ </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I work to prevent outages and I am obsessive about the science of uptime and measurement.">
+    
+    <link rel="shortcut icon" href="https://rayandas.in/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <link rel="canonical" href="https://rayandas.in/blogs/setup-onion-service/" />
+    <title>Set Up An Onion Service For Your Website</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://rayandas.in/">Rayan Das</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="about">about</a>
+            </li><li>
+                <a href="/blogs/" title="blogs">blogs</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li><li>
+                <a href="/talks/" title="talks">talks</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>Set Up An Onion Service For Your Website</h1>
+        <div>
+                <time>December 24, 2020</time>
+            </div>
+    </header><p><img src="/images/setup-onion-1.jpg" alt="" title="Image Source: https://www.torproject.org/"></p>
+<p>When looking to remain anonymous in today&rsquo;s world, <a href="https://www.torproject.org">Tor</a> is your safest bet. The Tor browser is a powerful free tool used for browsing the Internet anonymously, where you can discover varying websites utilizing the onion domain.</p>
+<p>Anonymity is seemingly fading nowadays with ISPs watching your every move and big tech websites selling off your information data to the highest bidder. If you are looking to create a new website, or even if you happen to already own one, it may be worth looking into what an onion site can offer you in terms of site protection for both yourself and your visitors.</p>
+<p><a href="https://www.torproject.org/download/">Download Tor Browser</a>.</p>
+<h2 id="what-is-an-onion-domain">What Is An Onion Domain?</h2>
+<p>An onion domain is an IP suffix that is exclusively for use through the Tor anonymity browser. This means that standard browsers like Microsoft Edge, Google Chrome, and Mozilla Firefox will not have access to sites using the onion domain as they are unable to navigate <a href="https://www.eff.org/pages/what-tor-relay">the relay of Tor proxy</a> from which Tor is created.</p>
+<h2 id="set-up-your-onion-service">Set Up Your Onion Service:</h2>
+<ul>
+<li>
+<p>Get a working Tor:
+Here is the <a href="https://community.torproject.org/onion-services/setup/install/">Tor installation guide</a>.</p>
+</li>
+<li>
+<p>Get a web server working:
+Assuming that you are already running <code>nginx</code> or <code>apache</code> on port <code>80</code> of your server.</p>
+</li>
+<li>
+<p>Configure your Tor onion service:
+Open the <code>/etc/tor/torrc</code> and add the following two lines.</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">HiddenServiceDir /var/lib/tor/my_website/
+</span></span><span class="line"><span class="cl">HiddenServicePort <span class="m">80</span> 127.0.0.1:80
+</span></span></code></pre></div><p>Now restart the <code>tor</code> service.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl restart tor
+</span></span></code></pre></div><p>When Tor restarts, it will automatically create the  HiddenServiceDir  that you specified. Make sure this is the case.</p>
+<p>Now we can see the address from the hostname file.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cat /var/lib/tor/my_website/hostname
+</span></span><span class="line"><span class="cl">hgxzzsqdli44o5wn7z3zo7djjfi7snhawqea6vzwgyad7uizmxqw6gyd.onion
+</span></span></code></pre></div><p>It will also create a <code>authorized_clients</code> directory at the service directory.</p>
+<p>Next step is to create keys of type <code>x25519</code> You can use these implementations.</p>
+<ol>
+<li><a href="https://github.com/pastly/python-snippits/blob/master/src/tor/x25519-gen.py">Python</a></li>
+<li><a href="https://github.com/ppopth/torkeygen">Rust</a></li>
+<li><a href="https://gist.github.com/mtigas/9c2386adf65345be34045dace134140b">Bash</a></li>
+</ol>
+<p>I got the secret and the public key using the Python implementation.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">public:  4A4SE2S3YXLR35K57D3EXVQKFW2WNVFCDMZRBHIF4APLMKE3AF3Q
+</span></span><span class="line"><span class="cl">private: AF7ER763REDLRI2ID7VROVINIRZCFWQHQIFT4KVOWOQYZRXOUF3A
+</span></span></code></pre></div><p>Now, we will use the public key to create a <code>clientname.auth</code> file in <code>/var/lib/tor/my_website/authorized_clients/</code> directory.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vim /var/lib/tor/hidden_service/my_website/raydeeam.auth
+</span></span></code></pre></div><p>Then we have to write as below (the file format is like <code>descriptor:x25519:public_key)</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">descriptor:x25519:4A4SE2S3YXLR35K57D3EXVQKFW2WNVFCDMZRBHIF4APLMKE3AF3Q
+</span></span></code></pre></div><p>Now restart the <code>tor</code> service again.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl restart tor
+</span></span></code></pre></div><h2 id="configure-nginx">Configure Nginx:</h2>
+<p>Add <code>Onion-Location</code> header in your main <code>nginx</code> configuration.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># /etc/nginx/sites-enabled/example.conf</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    listen 80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    server_name example.com<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    add_header Onion-Location http://hgxzzsqdli44o5wn7z3zo7djjfi7snhawqea6vzwgyad7uizmxqw6gyd.onion<span class="nv">$request_uri</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>Then Create another configuration file same as your main config file, remove your domain names and add the <code>.onion</code> hostname in <code>server_name</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># /etc/nginx/sites-enabled/onionsite.conf</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Given a hidden service running at hgxzzsqdli44o5wn7z3zo7djjfi7snhawqea6vzwgyad7uizmxqw6gyd.onion,</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># configured to connect to 127.0.0.1:80,</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># an nginx site config for .onion hostname might look like below.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    listen       80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    server_name  hgxzzsqdli44o5wn7z3zo7djjfi7snhawqea6vzwgyad7uizmxqw6gyd.onion<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    rewrite ^/<span class="o">(</span>.*<span class="o">)</span> http://hgxzzsqdli44o5wn7z3zo7djjfi7snhawqea6vzwgyad7uizmxqw6gyd.onion/<span class="nv">$1</span> permanent<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    listen       80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    server_name  hgxzzsqdli44o5wn7z3zo7djjfi7snhawqea6vzwgyad7uizmxqw6gyd.onion<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl">    location / <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        ...
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>Now restart <code>nginx</code> and <code>tor</code> services.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo service nginx restart
+</span></span><span class="line"><span class="cl">sudo systemctl restart tor
+</span></span></code></pre></div><p>References:</p>
+<ol>
+<li>
+<p><a href="https://community.torproject.org/onion-services/setup/">https://community.torproject.org/onion-services/setup/</a></p>
+</li>
+<li>
+<p><a href="https://kushaldas.in/posts/setting-up-authorized-v3-onion-services.html">https://kushaldas.in/posts/setting-up-authorized-v3-onion-services.html</a></p>
+</li>
+</ol>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2025 Rayan Das
+</footer>
+</body>
+</html>

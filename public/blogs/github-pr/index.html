@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel="stylesheet">
+ </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I work to prevent outages and I am obsessive about the science of uptime and measurement.">
+    
+    <link rel="shortcut icon" href="https://rayandas.in/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <link rel="canonical" href="https://rayandas.in/blogs/github-pr/" />
+    <title>GitHub PR</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://rayandas.in/">Rayan Das</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="about">about</a>
+            </li><li>
+                <a href="/blogs/" title="blogs">blogs</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li><li>
+                <a href="/talks/" title="talks">talks</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>GitHub PR</h1>
+        <div>
+                <time>August 8, 2019</time>
+            </div>
+    </header><p>This will guide you through making a pull request to a GitHub repository through the terminal so that you can make your life easier while working on a project.</p>
+<h3 id="how-it-works">How it works:</h3>
+<ol>
+<li>A developer creates the feature in a dedicated branch in their local repo.</li>
+<li>The developer pushes the branch to a public GitHub repository.</li>
+<li>The developer files a pull request</li>
+<li>The rest of the team reviews the code, discusses it, and alters it.</li>
+<li>The project maintainer merges the feature into the official repository and closes the pull request.</li>
+</ol>
+<h3 id="fork-a-repository">Fork a Repository:</h3>
+<p>To create a pull request you need to have made your code changes on a separate branch on the forked repository. To fork a repository you need to open the repository and click on the fork button. You&rsquo;ll get a copy of the repository after fork.</p>
+<h3 id="clone-the-repository">Clone the Repository:</h3>
+<p>To make your own local copy of the repository you would like to contribute to, let&rsquo;s fire up the terminal.
+We&rsquo;ll use <code>git clone</code> command with the URL that points to your fork of the repository.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$  git clone https://github.com/username/repository.git
+</span></span></code></pre></div><h3 id="create-a-new-branch">Create a New Branch:</h3>
+<p>This is where you&rsquo;ll add your features. If you create a new file remember to add it with git add command and commit them.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$  git add <span class="o">[</span>file-name<span class="o">]</span>
+</span></span><span class="line"><span class="cl">$  git commit -m <span class="s2">&#34;commit message&#34;</span>
+</span></span></code></pre></div><p>At this point you can push your changes to the new branch of your forked repository.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$  git push origin <span class="o">[</span>new-branch<span class="o">]</span>
+</span></span></code></pre></div><h3 id="make-the-pull-request">Make the Pull Request:</h3>
+<p>This is the most simple step if till now you&rsquo;ve done correctly. Now click on the New pull request button in your forked repo. Write down a nice report explaining why these changes should be included in the official source of your project and then confirm. Project author will get a notification that you submitted a PR. They will review your code and you&rsquo;ll get notification for their further actions. They may reject your PR or they may suggest something for changes. Go back, edit it and push again. PR will be automatically updated. If the maintainer is want to integrate your contributions to the project, the maintainer have to click Merge and your code will become a part of the original repo.</p>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2025 Rayan Das
+</footer>
+</body>
+</html>

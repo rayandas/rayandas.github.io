@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel="stylesheet">
+ </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I work to prevent outages and I am obsessive about the science of uptime and measurement.">
+    
+    <link rel="shortcut icon" href="https://rayandas.in/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <link rel="canonical" href="https://rayandas.in/blogs/rate-limit-with-nginx/" />
+    <title>Rate Limit With Nginx To Protect DoS Attacks</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://rayandas.in/">Rayan Das</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="about">about</a>
+            </li><li>
+                <a href="/blogs/" title="blogs">blogs</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li><li>
+                <a href="/talks/" title="talks">talks</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>Rate Limit With Nginx To Protect DoS Attacks</h1>
+        <div>
+                <time>October 12, 2020</time>
+            </div>
+    </header><p>HTTP DoS protection with Nginx through <code>ngx_http_limit_conn_module</code> and <code>ngx_http_limit_req_module</code> modules.</p>
+<p>I will show you how to rate limit by user agent (control bots).</p>
+<p>The module <code>ngx_http_limit_conn_module</code> is used to limit the number of connections per defined key, in particular, the number of connections from a single IP.</p>
+<p>Not all connections are counted. A connection is counted only if it has a request processed by the server and the whole request header has already been read.</p>
+<p>Example configration:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    limit_conn_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>addr:10m<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        location /download/ <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            limit_conn addr 1<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span></code></pre></div><p>Directives:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Syntax: 	limit_conn zone number<span class="p">;</span>
+</span></span><span class="line"><span class="cl">Default: 	—
+</span></span><span class="line"><span class="cl">Context: 	http, server, location
+</span></span></code></pre></div><p>Sets the shared memory zone and the maximum allowed number of connections for a given key value. When this limit is exceeded, the server will return the 503 (Service Temporarily Unavailable) error in reply to a request. For example, the directives allow only one connection per IP address at a time:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limit_conn_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>addr:10m<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    location /download/ <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        limit_conn addr 1<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>There could be several limit_conn directives. For example, the following configuration will limit the number of connections to the server per client IP and, at the same time, the total number of connections to the virtual server:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limit_conn_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>one:10m<span class="p">;</span>
+</span></span><span class="line"><span class="cl">limit_conn_zone <span class="nv">$server_name</span> <span class="nv">zone</span><span class="o">=</span>two:10m<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl">    limit_conn one 10<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    limit_conn two 100<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>The <code>ngx_http_limit_req_module</code> module (0.7.21) is used to limit the request processing rate per a defined key, in particular, the processing rate of requests coming from a single IP address. The limitation is done using the <code>“leaky bucket”</code> method</p>
+<p>Example Configuration:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">http <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    limit_req_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>one:10m <span class="nv">rate</span><span class="o">=</span>1r/s<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        ...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        location /search/ <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            limit_req <span class="nv">zone</span><span class="o">=</span>one <span class="nv">burst</span><span class="o">=</span>5<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span></code></pre></div><p>Directives:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">– Syntax: limit_req <span class="nv">zone</span><span class="o">=</span>name <span class="o">[</span><span class="nv">burst</span><span class="o">=</span>number<span class="o">]</span> <span class="o">[</span>nodelay<span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">– Default: —
+</span></span><span class="line"><span class="cl">– Context: http, server, location
+</span></span></code></pre></div><p>Sets the shared memory zone and the maximum burst size of requests. If the requests rate exceeds the rate configured for a zone, their processing is delayed such that requests are processed at a defined rate. Excessive requests are delayed until their number exceeds the maximum burst size in which case the request is terminated with an error 503 (Service Temporarily Unavailable). By default, the maximum burst size is equal to zero. For example, the directives allow not more than 1 request per second at an average, with bursts not exceeding 5 requests.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limit_req_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>one:10m <span class="nv">rate</span><span class="o">=</span>1r/s<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    location /search/ <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        limit_req <span class="nv">zone</span><span class="o">=</span>one <span class="nv">burst</span><span class="o">=</span>5<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><p>If delaying of excessive requests while requests are being limited is not desired, the parameter nodelay should be used:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limit_req <span class="nv">zone</span><span class="o">=</span>one <span class="nv">burst</span><span class="o">=</span><span class="m">5</span> nodelay<span class="p">;</span>
+</span></span></code></pre></div><p>There could be several limit_req directives. For example, the following configuration will limit the processing rate of requests coming from a single IP address and, at the same time, the request processing rate by the virtual server:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limit_req_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>perip:10m <span class="nv">rate</span><span class="o">=</span>1r/s<span class="p">;</span>
+</span></span><span class="line"><span class="cl">limit_req_zone <span class="nv">$server_name</span> <span class="nv">zone</span><span class="o">=</span>perserver:10m <span class="nv">rate</span><span class="o">=</span>10r/s<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    ...
+</span></span><span class="line"><span class="cl">    limit_req <span class="nv">zone</span><span class="o">=</span>perip <span class="nv">burst</span><span class="o">=</span><span class="m">5</span> nodelay<span class="p">;</span>
+</span></span><span class="line"><span class="cl">    limit_req <span class="nv">zone</span><span class="o">=</span>perserver <span class="nv">burst</span><span class="o">=</span>10<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>A practical example:</p>
+<p>In http section of nginx.conf:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limit_conn_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>conn_limit_per_ip:20m<span class="p">;</span>
+</span></span><span class="line"><span class="cl">limit_req_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>req_limit_per_ip:20m <span class="nv">rate</span><span class="o">=</span>2r/s<span class="p">;</span>
+</span></span></code></pre></div><p>In virtualhost:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">location / <span class="o">{</span>
+</span></span><span class="line"><span class="cl">     limit_req <span class="nv">zone</span><span class="o">=</span>req_limit_per_ip <span class="nv">burst</span><span class="o">=</span><span class="m">6</span> nodelay<span class="p">;</span>
+</span></span><span class="line"><span class="cl">     limit_conn conn_limit_per_ip 3<span class="p">;</span>
+</span></span><span class="line"><span class="cl">     try_files <span class="nv">$uri</span> <span class="nv">$uri</span>/ /index.html<span class="nv">$is_args$args</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     root /home/hackman/www/example.com<span class="p">;</span>
+</span></span><span class="line"><span class="cl">     index index.htm index.html<span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">}</span>
+</span></span></code></pre></div><p>You must remove limits for static content:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">location ~* ^.+.<span class="o">(</span>jpg<span class="p">|</span>jpeg<span class="p">|</span>gif<span class="p">|</span>png<span class="p">|</span>svg<span class="p">|</span>ico<span class="p">|</span>css<span class="p">|</span>less<span class="p">|</span>xml<span class="p">|</span>html?<span class="p">|</span>swf<span class="p">|</span>js<span class="p">|</span>ttf<span class="o">)</span>$ <span class="o">{</span>
+</span></span><span class="line"><span class="cl">     root /home/hackman/www/example.com<span class="p">;</span>
+</span></span><span class="line"><span class="cl">     expires 10y<span class="p">;</span>
+</span></span><span class="line"><span class="cl"> <span class="o">}</span>
+</span></span></code></pre></div><h1 id="limit-requests-by-user-agent">Limit requests by User Agent</h1>
+<p>As search engine indexing bots are getting more and more intelligent and thus more aggressive, sometimes they become really annoying or even can affect the performance of the system.</p>
+<p>While Nginx is a very powerful and flexible system, it is not always clear how to put all the configuration together to do the job.</p>
+<p>For any rate limiting, Nginx uses the <code>ngx_http_limit_req_module</code> module and it is pretty much strait-forward to limit based on IP address or any other simple value, but for the advanced configuration, you need to use maps with either static keys or regexp. That’s where things are getting more confusing.</p>
+<p>For clarity, and a more extended solution, let’s assume we want to limit user agents that match (GoogleBot|bingbot|YandexBot|mj12bot) pattern to 1 request from IP per minute burstable to 2 and the rest of the world to 10 requests per IP per second burstable to 15. To do this, the http section of the nginx.conf has to have the following part:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">map <span class="nv">$http_user_agent</span> <span class="nv">$isbot_ua</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        default 0<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        ~*<span class="o">(</span>GoogleBot<span class="p">|</span>bingbot<span class="p">|</span>YandexBot<span class="p">|</span>mj12bot<span class="o">)</span> 1<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">map <span class="nv">$isbot_ua</span> <span class="nv">$limit_bot</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="m">0</span>       <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="m">1</span>       <span class="nv">$binary_remote_addr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">limit_req_zone <span class="nv">$limit_bot</span> <span class="nv">zone</span><span class="o">=</span>bots:10m <span class="nv">rate</span><span class="o">=</span>1r/m<span class="p">;</span>
+</span></span><span class="line"><span class="cl">limit_req_zone <span class="nv">$binary_remote_addr</span> <span class="nv">zone</span><span class="o">=</span>one:10m <span class="nv">rate</span><span class="o">=</span>10r/s<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">limit_req <span class="nv">zone</span><span class="o">=</span>bots <span class="nv">burst</span><span class="o">=</span><span class="m">2</span> nodelay<span class="p">;</span>
+</span></span><span class="line"><span class="cl">limit_req <span class="nv">zone</span><span class="o">=</span>one <span class="nv">burst</span><span class="o">=</span><span class="m">15</span> nodelay<span class="p">;</span>
+</span></span></code></pre></div><p>The trick here is that we need to use two maps where the first one sets a value 0 based on the $http_user_agent and the second one sets the empty value for everyone who got 0 in the first map, but $binary_remote_addr for the ones who got the value 1 in the same first map. The idea is that for Nginx whitelist the request from limit zone, the return key and value from the map have to be empty (0 for key and “” for value), so the first map sets 0 for the value, and the second map takes that value as it’s key and sets the “” value.</p>
+<p>Or you can use the below configuration:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"> http <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     map <span class="nv">$http_user_agent</span> <span class="nv">$limit_bots</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">         default <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">         ~*<span class="o">(</span>google<span class="p">|</span>bing<span class="p">|</span>yandex<span class="p">|</span>msnbot<span class="o">)</span> <span class="nv">$binary_remote_addr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     limit_req_zone <span class="nv">$limit_bots</span> <span class="nv">zone</span><span class="o">=</span>bots:10m <span class="nv">rate</span><span class="o">=</span>1r/m<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">         location / <span class="o">{</span>
+</span></span><span class="line"><span class="cl">             limit_req <span class="nv">zone</span><span class="o">=</span>bots <span class="nv">burst</span><span class="o">=</span><span class="m">5</span> nodelay<span class="p">;</span>
+</span></span><span class="line"><span class="cl">         <span class="o">}</span>
+</span></span><span class="line"><span class="cl">     <span class="o">}</span>
+</span></span><span class="line"><span class="cl"> <span class="o">}</span>
+</span></span></code></pre></div><p>The rest of the configuration parameters are pretty much easy to understand and I won’t cover them here, since you can easily refer to nginx documentation.</p>
+<p>To make things even nicer, we can also tell nginx to send a good HTTP 429 code (Too Many Requests) when someone is above the limit and hope that the requester will interpret accordingly and slow down. To make this, just add the following line in the same part of nginx configuration:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limit_req_status 429<span class="p">;</span>
+</span></span></code></pre></div><p>If you are using the limit_conn directive anywhere for nginx, you can add the same thing for it as well:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">limit_conn_status 429<span class="p">;</span>
+</span></span></code></pre></div><p>Hope the above will save me and maybe even someone else some time and more similar posts to come later as I am getting my hands on different things.</p>
+<p>Sources:</p>
+<ul>
+<li><a href="http://nginx.org/en/docs/http/ngx_http_limit_conn_module.html">ngx_http_limit_conn_module</a></li>
+<li><a href="http://nginx.org/en/docs/http/ngx_http_limit_req_module.html">ngx_http_limit_req_module</a></li>
+</ul>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2025 Rayan Das
+</footer>
+</body>
+</html>

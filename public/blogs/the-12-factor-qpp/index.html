@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel="stylesheet">
+ </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I work to prevent outages and I am obsessive about the science of uptime and measurement.">
+    
+    <link rel="shortcut icon" href="https://rayandas.in/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <link rel="canonical" href="https://rayandas.in/blogs/the-12-factor-qpp/" />
+    <title>The Twelve-Factor App</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://rayandas.in/">Rayan Das</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="about">about</a>
+            </li><li>
+                <a href="/blogs/" title="blogs">blogs</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li><li>
+                <a href="/talks/" title="talks">talks</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>The Twelve-Factor App</h1>
+        <div>
+                <time>September 16, 2020</time>
+            </div>
+    </header><h2 id="introduction">Introduction</h2>
+<p>In the modern era, a software is commonly delivered as a service, called <code>web apps</code> or <code>software-as-a-service</code>. The twelve-factor app is a methodology for building software-as-a-service apps.</p>
+<p>I intend to summarise the twelve-factor app as a set of bullet points:</p>
+<ol>
+<li>Codebase - Single codebase and that codebase is not shared between apps.</li>
+<li>Dependencies - Manage its dependencies completely and explicitly.</li>
+<li>Configuration - Keeps config out of the code, prefers environment variables and setting values per deploy.</li>
+<li>Backing services - views all other services as backing services, whether they’re in-house or third party.</li>
+<li>Build, release and run - These states are strictly separated from each other.</li>
+<li>Processes - Given that processes can disappear at any moment, all processes should be stateless.</li>
+<li>Port binding - self-contained and self-sufficient, requiring no runtime injection and exposing itself on a port.</li>
+<li>Concurrency - Applications need to be able to scale horizontally, so there might be more than one instance of the service running at a time.</li>
+<li>Disposibility - Processes are completely disposable as they are quick to start up and graceful to pull down.</li>
+<li>Environment parity - The application should at all times work on all environments (development, production, etc) and environments should be as similar as possible.</li>
+<li>Logs - Logs should be output to stdout and stderr and one should use some external tool for handling logs.</li>
+<li>Admin processes - These should run as one-off processes, in an environment identical to the one in which the application is running.</li>
+</ol>
+<p>Read more about each point in more details in <a href="https://12factor.net">The Twelve-Factor App</a></p>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2025 Rayan Das
+</footer>
+</body>
+</html>

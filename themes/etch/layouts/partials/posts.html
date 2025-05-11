@@ -1,0 +1,6 @@
+<h4>Calm in the Chaos</h4>
+<ul id="posts">
+{{- range where site.RegularPages "Type" "in" site.Params.mainSections }}
+    {{ .Render "li" }}
+{{- end }}
+</ul>

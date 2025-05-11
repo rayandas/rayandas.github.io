@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on Rayan Das</title>
+    <link>https://rayandas.in/blogs/</link>
+    <description>Recent content in Blogs on Rayan Das</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Dec 2020 00:19:25 +0530</lastBuildDate>
+    <atom:link href="https://rayandas.in/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Set Up An Onion Service For Your Website</title>
+      <link>https://rayandas.in/blogs/setup-onion-service/</link>
+      <pubDate>Thu, 24 Dec 2020 00:19:25 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/setup-onion-service/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://rayandas.in/images/setup-onion-1.jpg&#34; alt=&#34;&#34; title=&#34;Image Source: https://www.torproject.org/&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;When looking to remain anonymous in today&amp;rsquo;s world, &lt;a href=&#34;https://www.torproject.org&#34;&gt;Tor&lt;/a&gt; is your safest bet. The Tor browser is a powerful free tool used for browsing the Internet anonymously, where you can discover varying websites utilizing the onion domain.&lt;/p&gt;&#xA;&lt;p&gt;Anonymity is seemingly fading nowadays with ISPs watching your every move and big tech websites selling off your information data to the highest bidder. If you are looking to create a new website, or even if you happen to already own one, it may be worth looking into what an onion site can offer you in terms of site protection for both yourself and your visitors.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Rate Limit With Nginx To Protect DoS Attacks</title>
+      <link>https://rayandas.in/blogs/rate-limit-with-nginx/</link>
+      <pubDate>Mon, 12 Oct 2020 17:02:00 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/rate-limit-with-nginx/</guid>
+      <description>&lt;p&gt;HTTP DoS protection with Nginx through &lt;code&gt;ngx_http_limit_conn_module&lt;/code&gt; and &lt;code&gt;ngx_http_limit_req_module&lt;/code&gt; modules.&lt;/p&gt;&#xA;&lt;p&gt;I will show you how to rate limit by user agent (control bots).&lt;/p&gt;&#xA;&lt;p&gt;The module &lt;code&gt;ngx_http_limit_conn_module&lt;/code&gt; is used to limit the number of connections per defined key, in particular, the number of connections from a single IP.&lt;/p&gt;&#xA;&lt;p&gt;Not all connections are counted. A connection is counted only if it has a request processed by the server and the whole request header has already been read.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Status Codes</title>
+      <link>https://rayandas.in/blogs/status-codes/</link>
+      <pubDate>Tue, 22 Sep 2020 20:48:37 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/status-codes/</guid>
+      <description>&lt;p&gt;Every HTTP response has a status code. There are around 60+ status codes but these are the most common in real life:&lt;/p&gt;&#xA;&lt;h3 id=&#34;2-success&#34;&gt;2×× Success&lt;/h3&gt;&#xA;&lt;p&gt;200 OK&#xA;The request has succeeded&lt;/p&gt;&#xA;&lt;h3 id=&#34;3xxs-arent-errors-just-redirect-to-somewhere-else&#34;&gt;3xx&amp;rsquo;s aren&amp;rsquo;t errors, just redirect to somewhere else.&lt;/h3&gt;&#xA;&lt;p&gt;301 Moved Permanently&#xA;The target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the enclosed URIs.&lt;/p&gt;&#xA;&lt;p&gt;302 Found (temporary redirection)&#xA;The target resource resides temporarily under a different URI. Since the redirection might be altered on occasion, the client ought to continue to use the effective request URI for future requests.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Most Important HTTP Request Headers</title>
+      <link>https://rayandas.in/blogs/request-headers/</link>
+      <pubDate>Mon, 21 Sep 2020 16:01:00 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/request-headers/</guid>
+      <description>&lt;p&gt;When a browser requests a resource from a server, it uses HTTP. This request includes a set of key-value pairs giving informations like the version of the browser or what file format it understands. There key-value pairs are called request headers.&lt;/p&gt;&#xA;&lt;p&gt;The server answers with the requested resource but also sends response headers giving information on the resource or the server itself.&lt;/p&gt;&#xA;&lt;p&gt;Below are the most important request headers:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Host: The domain. The only required header.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Host: website-name.com&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;User-Agent: Name + version of your browser and OS.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;User-Agent: curl/7.64.1&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;&#xA;&lt;li&gt;Referer: Website that linked or included the resource.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Referer: https://website-name.com&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;&#xA;&lt;li&gt;Authorization: A password or API token&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Authorization: Basic xyz&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;base64 encoded user: password&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;5&#34;&gt;&#xA;&lt;li&gt;Cookie: Send cookies the server sent earlier and keeps you logged in.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Cookie: &lt;span class=&#34;nv&#34;&gt;user&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;john&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;6&#34;&gt;&#xA;&lt;li&gt;Range: Let&amp;rsquo;s you continue downloads (&amp;ldquo;get bytes 100-200&amp;rdquo;)&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Range: &lt;span class=&#34;nv&#34;&gt;bytes&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;100-200&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;7&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Cache-Control: &amp;ldquo;max-age=60&amp;rdquo; means cached responses must be less than 60 seconds old.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Your Browser&#39;s Language: HTTP</title>
+      <link>https://rayandas.in/blogs/http/</link>
+      <pubDate>Sun, 20 Sep 2020 12:25:38 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/http/</guid>
+      <description>&lt;p&gt;Ever wondered what actually happens when you type an address into your web browser and then hit enter?&#xA;At that moment your computer starts talking to another computer, called the server, which is usually thousands of miles away. And in milliseconds your computer asks that server for a website and that server starts to talk back to your computer in a language called HTTP.&lt;/p&gt;&#xA;&lt;p&gt;HTTP stands for HyperText Transfer Protocol. You can think of it as the language that one computer uses to ask another computer for a document.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Twelve-Factor App</title>
+      <link>https://rayandas.in/blogs/the-12-factor-qpp/</link>
+      <pubDate>Wed, 16 Sep 2020 22:37:16 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/the-12-factor-qpp/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;In the modern era, a software is commonly delivered as a service, called &lt;code&gt;web apps&lt;/code&gt; or &lt;code&gt;software-as-a-service&lt;/code&gt;. The twelve-factor app is a methodology for building software-as-a-service apps.&lt;/p&gt;&#xA;&lt;p&gt;I intend to summarise the twelve-factor app as a set of bullet points:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Codebase - Single codebase and that codebase is not shared between apps.&lt;/li&gt;&#xA;&lt;li&gt;Dependencies - Manage its dependencies completely and explicitly.&lt;/li&gt;&#xA;&lt;li&gt;Configuration - Keeps config out of the code, prefers environment variables and setting values per deploy.&lt;/li&gt;&#xA;&lt;li&gt;Backing services - views all other services as backing services, whether they’re in-house or third party.&lt;/li&gt;&#xA;&lt;li&gt;Build, release and run - These states are strictly separated from each other.&lt;/li&gt;&#xA;&lt;li&gt;Processes - Given that processes can disappear at any moment, all processes should be stateless.&lt;/li&gt;&#xA;&lt;li&gt;Port binding - self-contained and self-sufficient, requiring no runtime injection and exposing itself on a port.&lt;/li&gt;&#xA;&lt;li&gt;Concurrency - Applications need to be able to scale horizontally, so there might be more than one instance of the service running at a time.&lt;/li&gt;&#xA;&lt;li&gt;Disposibility - Processes are completely disposable as they are quick to start up and graceful to pull down.&lt;/li&gt;&#xA;&lt;li&gt;Environment parity - The application should at all times work on all environments (development, production, etc) and environments should be as similar as possible.&lt;/li&gt;&#xA;&lt;li&gt;Logs - Logs should be output to stdout and stderr and one should use some external tool for handling logs.&lt;/li&gt;&#xA;&lt;li&gt;Admin processes - These should run as one-off processes, in an environment identical to the one in which the application is running.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Read more about each point in more details in &lt;a href=&#34;https://12factor.net&#34;&gt;The Twelve-Factor App&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Do You Know About Dockerfiles?</title>
+      <link>https://rayandas.in/blogs/do-you-know-about-dockerfiles/</link>
+      <pubDate>Wed, 09 Sep 2020 00:04:46 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/do-you-know-about-dockerfiles/</guid>
+      <description>&lt;h1 id=&#34;what-is-docker&#34;&gt;What is Docker?&lt;/h1&gt;&#xA;&lt;p&gt;Do you know the famous phrase &lt;code&gt;It works on my machine?&lt;/code&gt;&lt;/p&gt;&#xA;&lt;p&gt;Yeah, forget about it, with Docker it is not an excuse anymore. Docker allows you to locally run the same (or almost the same) environment which will be used in production.&lt;/p&gt;&#xA;&lt;p&gt;So let’s get started understanding what docker is.&lt;/p&gt;&#xA;&lt;p&gt;Let’s first look at the definition given by Wikipedia:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Docker is a set of platform-as-a-service (PaaS) products that use OS-level virtualization to deliver software in packages called containers.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Container 101 Part 2</title>
+      <link>https://rayandas.in/blogs/container-101-part-2/</link>
+      <pubDate>Sat, 29 Aug 2020 18:52:28 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/container-101-part-2/</guid>
+      <description>&lt;h3 id=&#34;build-run-and-test-a-container-image&#34;&gt;Build, Run, and Test a Container Image&lt;/h3&gt;&#xA;&lt;p&gt;Checkout my &lt;a href=&#34;https://rayandas.in/blogs/container-101/&#34;&gt;Container 101 Part 1&lt;/a&gt; blog.&lt;/p&gt;&#xA;&lt;p&gt;In this part, let&amp;rsquo;s start with a pre-built image that someone else has created and pulling that from a public registry.&lt;/p&gt;&#xA;&lt;p&gt;A registry is simply a collection or a repository of images and a public one is when it&amp;rsquo;s made available to all people over the internet.&lt;/p&gt;&#xA;&lt;p&gt;To pull an image from a registry, whether that&amp;rsquo;d be a public registry or a private registry, we simple use the docker command along with the pull sub command.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Container 101</title>
+      <link>https://rayandas.in/blogs/container-101/</link>
+      <pubDate>Tue, 11 Aug 2020 00:16:06 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/container-101/</guid>
+      <description>&lt;h1 id=&#34;what-are-containers&#34;&gt;What are Containers?&lt;/h1&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://rayandas.in/images/container-carbon0.jpeg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Containers take their name from their real-life counterparts. We can leverage a Container of any sort for this analogy. But the de facto standard virtualization is of course, the shipping Containers. When you are shipping items to the other side of the world, Containers make it easy to package goods together into a single shipment. The standard shape and size makes packing lots of containers onto a ship efficient. The walls provide isolation, preventing items from getting mixed together. Ther are portable, designed to be easily moved, and shipped, and there&amp;rsquo;s a clear separation of concerns.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Deploy Hugo Site With NGINX</title>
+      <link>https://rayandas.in/blogs/deploy-hugo-site-with-nginx/</link>
+      <pubDate>Thu, 04 Jun 2020 11:31:15 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/deploy-hugo-site-with-nginx/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://rayandas.in/images/n+hugo.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;I have just got an Ubuntu instance today. I am so excited to tinker around it. So I thought why don&amp;rsquo;t I host my website and blog from my server instead of deploying it on Netlify.&lt;/p&gt;&#xA;&lt;p&gt;I struggled a little, but find a way through it. I will take you to the process step by step.&lt;/p&gt;&#xA;&lt;h3 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Linux OS: I recommend a dedicated system for hosting (VPS on a provider such as &lt;a href=&#34;https://www.digitalocean.com/products/droplets/&#34;&gt;DigitalOcean&lt;/a&gt;, &lt;a href=&#34;https://www.linode.com/pricing/&#34;&gt;Linode&lt;/a&gt; or &lt;a href=&#34;https://www.vultr.com/products/cloud-compute/&#34;&gt;Vultr&lt;/a&gt;).&lt;/li&gt;&#xA;&lt;li&gt;A domain: You can&amp;rsquo;t really expect to run a website without one. There is plenty of registrars out there. I personally like &lt;a href=&#34;https://www.namecheap.com/&#34;&gt;NameCheap&lt;/a&gt;.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;installing-hugo&#34;&gt;Installing Hugo&lt;/h3&gt;&#xA;&lt;p&gt;Visit the &lt;a href=&#34;https://gohugo.io/getting-started/installing/#debian-and-ubuntu&#34;&gt;Hugo quickstart guid&lt;/a&gt; for destro specific information. I installed Hugo on my Ubuntu server with&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Reverse Proxy</title>
+      <link>https://rayandas.in/blogs/reverse-proxy/</link>
+      <pubDate>Sat, 30 May 2020 23:18:55 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/reverse-proxy/</guid>
+      <description>&lt;p&gt;Let’s first talk about what’s a proxy. A proxy is a server that accepts connections from clients, which actively configured the proxy server on their machines, in their network settings.&lt;/p&gt;&#xA;&lt;p&gt;When a client makes a connection to a server, the requests always pass through that proxy server.&lt;/p&gt;&#xA;&lt;p&gt;This practice has several uses. Companies and organizations can set up proxy servers to filter connections, provide more security, and log traffic. Without using the proxy, clients can’t reach the outside network. Proxy servers are also useful to provide privacy.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Start Your Blog With Hugo</title>
+      <link>https://rayandas.in/blogs/start-your-blog-with-hugo/</link>
+      <pubDate>Sat, 23 May 2020 20:06:13 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/start-your-blog-with-hugo/</guid>
+      <description>&lt;p&gt;A detailed steps to start your own blog site using Hugo from zero to deployment.&lt;/p&gt;&#xA;&lt;p&gt;Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again.&lt;/p&gt;&#xA;&lt;p&gt;I love Hugo because it&amp;rsquo;s fast, is has Go at the core. Install in seconds, build in milliseconds. Hugo works on macOS, Windows, Linux, FreeBSD, and others. Host on any server or your favorite CDN.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Intro to Linux Kernel</title>
+      <link>https://rayandas.in/blogs/intro-to-linux-kernel/</link>
+      <pubDate>Fri, 27 Mar 2020 14:52:58 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/intro-to-linux-kernel/</guid>
+      <description>&lt;p&gt;As we all know, Linux is a member of the large family of Unix-like operating systems. Linux was initially developed by Linus Torvalds as an operating system. Linus remains deeply involved with improving Linux, keeping it up-to-date with various hardware developments, and coordinating the activity of hundreds of Linux developers around the world.&lt;/p&gt;&#xA;&lt;p&gt;One of the benefits of Linux is that it isn&amp;rsquo;t commercial operating system, it&amp;rsquo;s source code under the GNU license is open and available to anyone to use and contribute.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>GitHub PR</title>
+      <link>https://rayandas.in/blogs/github-pr/</link>
+      <pubDate>Thu, 08 Aug 2019 02:37:14 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/github-pr/</guid>
+      <description>&lt;p&gt;This will guide you through making a pull request to a GitHub repository through the terminal so that you can make your life easier while working on a project.&lt;/p&gt;&#xA;&lt;h3 id=&#34;how-it-works&#34;&gt;How it works:&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;A developer creates the feature in a dedicated branch in their local repo.&lt;/li&gt;&#xA;&lt;li&gt;The developer pushes the branch to a public GitHub repository.&lt;/li&gt;&#xA;&lt;li&gt;The developer files a pull request&lt;/li&gt;&#xA;&lt;li&gt;The rest of the team reviews the code, discusses it, and alters it.&lt;/li&gt;&#xA;&lt;li&gt;The project maintainer merges the feature into the official repository and closes the pull request.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h3 id=&#34;fork-a-repository&#34;&gt;Fork a Repository:&lt;/h3&gt;&#xA;&lt;p&gt;To create a pull request you need to have made your code changes on a separate branch on the forked repository. To fork a repository you need to open the repository and click on the fork button. You&amp;rsquo;ll get a copy of the repository after fork.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>The Force - Git</title>
+      <link>https://rayandas.in/blogs/the-fource-git/</link>
+      <pubDate>Tue, 30 Jul 2019 18:52:26 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/the-fource-git/</guid>
+      <description>&lt;p&gt;Git is a very popular and efficient Distributed Version Control System used by many contributors for many projects. “Distributed” means that all developers within a team have a complete version of the project. It&amp;rsquo;s free and open source. Most of us dislike Git on the first try even after running the most basic Git commands. Git is complicated at first I agree. But Git is so dear to Programmers.&#xA;Sadly programmers life is a mess without Git. Its very helpful for managing projects&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Secure Shell (SSH)</title>
+      <link>https://rayandas.in/blogs/want-to-know-about-ssh/</link>
+      <pubDate>Wed, 24 Jul 2019 22:16:36 +0530</pubDate>
+      <guid>https://rayandas.in/blogs/want-to-know-about-ssh/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://rayandas.in/images/hugo-ssh.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;For a beginner, who just started playing with computers, SSH (Secure Shell) is basically a set of rules which provides a secure connection between two computers. It can be used to securely connect a computer to a remote computer. For example Developers or System Admins could continue their work while they&amp;rsquo;re on vacation on another country using SSH.&#xA;The way SSH works is by making use of a client-server model to allow for authentication of two remote machines and encryption of the data that passes between them.&#xA;There are three different types of encryptions used by SSH.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

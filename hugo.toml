@@ -1,0 +1,72 @@
+baseURL = "https://rayandas.in/"
+languageCode = "en-us"
+title = "Rayan Das"
+theme = "etch"
+disableKinds = ["taxonomy"]
+enableInlineShortcodes = true
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+googleAnalytics = "G-KLTZ2QBY2X"
+
+[params]
+  description = "Rayan Das"
+  copyright = "Copyright © 2025 Rayan Das"
+  dark = "off"
+  highlight = true
+
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name = "about"
+    title = "about"
+    url = "/"
+    weight = 10
+
+#  [[menu.main]]
+#    identifier = "til"
+#    name = "til"
+#    title = "Today I learned"
+#    url = "https://til.rayandas.in"
+#    weight = 10
+
+  [[menu.main]]
+    identifier = "blogs"
+    name = "blogs"
+    title = "blogs"
+    url = "/blogs/"
+    weight = 10
+
+#  [[menu.main]]
+#    identifier = "resume"
+#    name = "resume"
+#    title = "resume"
+#    url = "/resume/"
+#    weight = 10
+
+  [[menu.main]]
+    identifier = "contact"
+    name = "contact"
+    title = "contact"
+    url = "/contact/"
+    weight = 10
+
+#  [[menu.main]]
+#    identifier = "til"
+#    name = "til"
+#    title = "Today I learned"
+#    url = "https://til.rayandas.in"
+#    weight = 10
+
+  [[menu.main]]
+    identifier = "talks"
+    name = "talks"
+    title = "talks"
+    url = "/talks/"
+    weight = 10
+
+[permalinks]
+  posts = "/:title/"
+
+[markup.goldmark.renderer]
+  # Allows HTML in Markdown
+  unsafe = true

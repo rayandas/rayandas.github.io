@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel="stylesheet">
+ </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I work to prevent outages and I am obsessive about the science of uptime and measurement.">
+    
+    <link rel="shortcut icon" href="https://rayandas.in/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <link rel="canonical" href="https://rayandas.in/blogs/deploy-hugo-site-with-nginx/" />
+    <title>Deploy Hugo Site With NGINX</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://rayandas.in/">Rayan Das</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="about">about</a>
+            </li><li>
+                <a href="/blogs/" title="blogs">blogs</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li><li>
+                <a href="/talks/" title="talks">talks</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>Deploy Hugo Site With NGINX</h1>
+        <div>
+                <time>June 4, 2020</time>
+            </div>
+    </header><p><img src="/images/n+hugo.png" alt=""></p>
+<p>I have just got an Ubuntu instance today. I am so excited to tinker around it. So I thought why don&rsquo;t I host my website and blog from my server instead of deploying it on Netlify.</p>
+<p>I struggled a little, but find a way through it. I will take you to the process step by step.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Linux OS: I recommend a dedicated system for hosting (VPS on a provider such as <a href="https://www.digitalocean.com/products/droplets/">DigitalOcean</a>, <a href="https://www.linode.com/pricing/">Linode</a> or <a href="https://www.vultr.com/products/cloud-compute/">Vultr</a>).</li>
+<li>A domain: You can&rsquo;t really expect to run a website without one. There is plenty of registrars out there. I personally like <a href="https://www.namecheap.com/">NameCheap</a>.</li>
+</ul>
+<h3 id="installing-hugo">Installing Hugo</h3>
+<p>Visit the <a href="https://gohugo.io/getting-started/installing/#debian-and-ubuntu">Hugo quickstart guid</a> for destro specific information. I installed Hugo on my Ubuntu server with</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install hugo
+</span></span></code></pre></div><p>If Hugo is not in your distro’s repositories, you can always download it with the <a href="https://gohugo.io/getting-started/installing/#install-hugo-from-tarball">tarball</a>.</p>
+<h3 id="configure-nginx">Configure Nginx</h3>
+<p>I hope you built your site locally and pushed to GitHub. If not, refer to my blog <a href="https://rayandas.in/blogs/start-your-blog-with-hugo/">Start Your Blog With Hugo</a>.</p>
+<p>Now make sure you have installed Nginx, which is available on pretty much default repository.</p>
+<p>Now we are going to create a configuration file for our site.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> /etc/nginx/sites-available/
+</span></span><span class="line"><span class="cl">sudo vim hugo-site
+</span></span></code></pre></div><p>I hope you know how to use Vim.</p>
+<p>Now your configuration should look like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        listen 80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">	listen <span class="o">[</span>::<span class="o">]</span>:80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">	server_name example.in www.example.in<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="m">301</span> https://example.in<span class="nv">$request_uri</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	listen 80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        listen <span class="o">[</span>::<span class="o">]</span>:80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">	server_name example.in<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        root /home/username/hugo/public/<span class="p">;</span> <span class="c1">#Absolute path to where your hugo site is</span>
+</span></span><span class="line"><span class="cl">        index index.html index.htm index.shtml<span class="p">;</span> <span class="c1"># Hugo generates HTML</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        location / <span class="o">{</span>
+</span></span><span class="line"><span class="cl">       		try_files <span class="nv">$uri</span> <span class="nv">$uri</span>/ /index.html <span class="o">=</span>404<span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">server <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        listen 80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        listen <span class="o">[</span>::<span class="o">]</span>:80<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        server_name www.example.in<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        root /home/username/hugo/public/<span class="p">;</span> <span class="c1">#Absolute path to where your hugo site is</span>
+</span></span><span class="line"><span class="cl">        index index.html index.htm index.shtml<span class="p">;</span> <span class="c1"># Hugo generates HTML</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        location / <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        	try_files <span class="nv">$uri</span> <span class="nv">$uri</span>/ /index.html <span class="o">=</span>404<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>To enable this site, we need to create a symlink from your site into <code>site-enabled</code>.
+Use absolute paths to avoid symlink confusion.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ln -s /etc/nginx/sites-available/hugo-site /etc/nginx/sites-enabled/hugo-site
+</span></span></code></pre></div><p>Now we can start and enable Nginx with the following commands:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start nginx
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> nginx
+</span></span></code></pre></div><h3 id="quick-checks">Quick Checks</h3>
+<ul>
+<li>Did you add registrars nameservers to point at the server you’re using to host?</li>
+<li>Did you create A records with your hosting provider to direct requests to the correct server? (add a separate A record for the www subdomain)</li>
+</ul>
+<h3 id="add-ssl-certificates">Add SSL Certificates</h3>
+<p>SSL is a must these days, and it’s very easy to implement. I used <a href="https://certbot.eff.org/">Certbot</a>, because it&rsquo;s easy to use and hey, who doesn&rsquo;t love the <a href="https://www.eff.org/">EFF</a>?</p>
+<p>Visit the certbot site to get customized instructions based on your setup, but here is the process for NGINX running on Ubuntu:</p>
+<p>First we&rsquo;ll add the certbot PPA:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get update
+</span></span><span class="line"><span class="cl">sudo apt-get install software-properties-common
+</span></span><span class="line"><span class="cl">sudo add-apt-repository universe
+</span></span><span class="line"><span class="cl">sudo add-apt-repository ppa:certbot/certbot
+</span></span></code></pre></div><p>Then we&rsquo;ll install certbot itself:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install certbot python-certbot-nginx
+</span></span></code></pre></div><p>And finally, we&rsquo;ll run the setup script:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo certbot --nginx
+</span></span></code></pre></div><p>Now check your website. Yay congratulations. \o/</p>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2025 Rayan Das
+</footer>
+</body>
+</html>

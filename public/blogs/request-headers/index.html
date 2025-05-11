@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel="stylesheet">
+ </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I work to prevent outages and I am obsessive about the science of uptime and measurement.">
+    
+    <link rel="shortcut icon" href="https://rayandas.in/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <link rel="canonical" href="https://rayandas.in/blogs/request-headers/" />
+    <title>The Most Important HTTP Request Headers</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://rayandas.in/">Rayan Das</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="about">about</a>
+            </li><li>
+                <a href="/blogs/" title="blogs">blogs</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li><li>
+                <a href="/talks/" title="talks">talks</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>The Most Important HTTP Request Headers</h1>
+        <div>
+                <time>September 21, 2020</time>
+            </div>
+    </header><p>When a browser requests a resource from a server, it uses HTTP. This request includes a set of key-value pairs giving informations like the version of the browser or what file format it understands. There key-value pairs are called request headers.</p>
+<p>The server answers with the requested resource but also sends response headers giving information on the resource or the server itself.</p>
+<p>Below are the most important request headers:</p>
+<ol>
+<li>Host: The domain. The only required header.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Host: website-name.com
+</span></span></code></pre></div><ol start="2">
+<li>User-Agent: Name + version of your browser and OS.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">User-Agent: curl/7.64.1
+</span></span></code></pre></div><ol start="3">
+<li>Referer: Website that linked or included the resource.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Referer: https://website-name.com
+</span></span></code></pre></div><ol start="4">
+<li>Authorization: A password or API token</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Authorization: Basic xyz<span class="o">(</span>base64 encoded user: password<span class="o">)</span>
+</span></span></code></pre></div><ol start="5">
+<li>Cookie: Send cookies the server sent earlier and keeps you logged in.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Cookie: <span class="nv">user</span><span class="o">=</span>john
+</span></span></code></pre></div><ol start="6">
+<li>Range: Let&rsquo;s you continue downloads (&ldquo;get bytes 100-200&rdquo;)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Range: <span class="nv">bytes</span><span class="o">=</span>100-200
+</span></span></code></pre></div><ol start="7">
+<li>
+<p>Cache-Control: &ldquo;max-age=60&rdquo; means cached responses must be less than 60 seconds old.</p>
+</li>
+<li>
+<p>If-Modified-since: Only send if resource was modified after this time.</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">If-Modified-Since: Sun, <span class="m">21</span> Sep...
+</span></span></code></pre></div><ol start="9">
+<li>If-None-Match: Only sent if the ETag doesn&rsquo;t match those listed.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">If-None-Match: <span class="s2">&#34;z9843ca&#34;</span>
+</span></span></code></pre></div><ol start="10">
+<li>Accept: MIME type you want the response to be.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Accept: image/png
+</span></span></code></pre></div><ol start="11">
+<li>Accept-Encoding: Set this to &ldquo;gzip&rdquo; and you&rsquo;ll probably get a compressed response.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Accept-Encoding: gzip
+</span></span></code></pre></div><ol start="12">
+<li>Accept-Language: Set this to &ldquo;fr-CA&rdquo; and you might get a response in French.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Accept-Language: fr-CA
+</span></span></code></pre></div><ol start="13">
+<li>
+<p>Content-Type: MIME type of request body, e.g. &ldquo;application/json&rdquo;</p>
+</li>
+<li>
+<p>Content-Encoding: Will be &ldquo;gzip&rdquo; if the request body is gzipped.</p>
+</li>
+<li>
+<p>Connection: &ldquo;close&rdquo; of &ldquo;keep-alive&rdquo; Whether to keep the TCP connection open.</p>
+</li>
+</ol>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2025 Rayan Das
+</footer>
+</body>
+</html>

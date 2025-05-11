@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel="stylesheet">
+ </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I work to prevent outages and I am obsessive about the science of uptime and measurement.">
+    
+    <link rel="shortcut icon" href="https://rayandas.in/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <link rel="canonical" href="https://rayandas.in/blogs/intro-to-linux-kernel/" />
+    <title>Intro to Linux Kernel</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://rayandas.in/">Rayan Das</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="about">about</a>
+            </li><li>
+                <a href="/blogs/" title="blogs">blogs</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li><li>
+                <a href="/talks/" title="talks">talks</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>Intro to Linux Kernel</h1>
+        <div>
+                <time>March 27, 2020</time>
+            </div>
+    </header><p>As we all know, Linux is a member of the large family of Unix-like operating systems. Linux was initially developed by Linus Torvalds as an operating system. Linus remains deeply involved with improving Linux, keeping it up-to-date with various hardware developments, and coordinating the activity of hundreds of Linux developers around the world.</p>
+<p>One of the benefits of Linux is that it isn&rsquo;t commercial operating system, it&rsquo;s source code under the GNU license is open and available to anyone to use and contribute.</p>
+<h3 id="basic-operating-system-concepts">Basic Operating System Concepts.</h3>
+<p>Each computer system includes the basic set of programs called the operating system. The most important program in the set is called the kernel. It is loaded into RAM when the system boots and contains many critical procedures that are needed for the system to operate. The kernel provides key facilities to everything else on the system and determines many of the characteristics of higher software.
+The operating system must fulfill two main objectives:</p>
+<ul>
+<li>Interact with the hardware components, servicing all low-level programmable elements included in the hardware platform.</li>
+<li>Provide an execution environment to the applications that run on the computer system.</li>
+</ul>
+<p>Some operating system allows all user programs to directly play with the hardware components(like MS-DOS). A Unix-like operating system hides all low-level details concerning the physical organization of the computer from applications runs by the user. When a program wants to use use a hardware resource, it must issue a request to the operating system. The kernel evaluates the request and, if it chooses to grant the request the resource, interacts with the proper hardware components on behalf of the user program.</p>
+<h3 id="kernel-architecture">Kernel Architecture</h3>
+<p>Most Unix kernels are monolithic: each kernel layer is integrated into the whole kernel program and runs in Kernel Mode on behalf of the current process. In contrast, microkernel operating systems demand a very small set of functions from the kernel, generally including a few synchronization primitives, a simple scheduler, and an interprocess communication mechanism.</p>
+<p>Microkernels are generally slower than monolithic operating systems. However, microkernel operating systems might have a theoretical advantages over monolithic ones. Microkernels force the system programmers to adopt a modularized approach, because each operating system layer is a relatively independent program that must interact with the other layers through well defined and clean software interfaces.</p>
+<p>To achieve many of the theoretical advantages of microkernels without introducing performance penalties, the Linux kernel offers modules. A module is an object file whose code can be link to (and unlink from) the kernel at runtime.</p>
+<p>The main advantage of using modules include:</p>
+<h4 id="a-modularized-approach">A modularized approach:</h4>
+<p>Because any module can be linked and unlinked at runtime, system programmers must introduce well-defined software interfaces to access the data structures handled by modules. This makes it easy to develop new modules.</p>
+<h4 id="platform-independence">Platform independence:</h4>
+<p>It may rely on some specific hardware features, but a module doesn&rsquo;t depend on a fixed hardware platform.</p>
+<h4 id="frugal-main-memory-usages">Frugal main memory usages:</h4>
+<p>A module can be linked to the running kernel when its functionality is required and unlinked when it is no longer useful.</p>
+<h4 id="no-performance-penalty">No performance penalty:</h4>
+<p>Once linked in, the object code of a module is equivalent to the object code of the statically linked kernel. Therefore, no explicit message passing is required when the functions of the modules are invoked.</p>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2025 Rayan Das
+</footer>
+</body>
+</html>

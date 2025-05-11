@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+     <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,400" rel="stylesheet">
+ </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I work to prevent outages and I am obsessive about the science of uptime and measurement.">
+    
+    <link rel="shortcut icon" href="https://rayandas.in/favicon.ico">
+    
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    <link rel="canonical" href="https://rayandas.in/blogs/the-fource-git/" />
+    <title>The Force - Git</title>
+</head>
+<body><header id="banner">
+    <h2><a href="https://rayandas.in/">Rayan Das</a></h2>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" title="about">about</a>
+            </li><li>
+                <a href="/blogs/" title="blogs">blogs</a>
+            </li><li>
+                <a href="/contact/" title="contact">contact</a>
+            </li><li>
+                <a href="/talks/" title="talks">talks</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+<article>
+    <header id="post-header">
+        <h1>The Force - Git</h1>
+        <div>
+                <time>July 30, 2019</time>
+            </div>
+    </header><p>Git is a very popular and efficient Distributed Version Control System used by many contributors for many projects. “Distributed” means that all developers within a team have a complete version of the project. It&rsquo;s free and open source. Most of us dislike Git on the first try even after running the most basic Git commands. Git is complicated at first I agree. But Git is so dear to Programmers.
+Sadly programmers life is a mess without Git. Its very helpful for managing projects</p>
+<h3 id="i-know-who-did-what-when-and-why--git">“I know who did what, when, and why.” -Git</h3>
+<p>There are few commands using which we can make our life easier and let Git to track everything.</p>
+<h3 id="getting--creating-projects">Getting &amp; Creating Projects:</h3>
+<p><code>$ git init:</code> After creating a new directory, perform git init to create an empty git repository.</p>
+<p><code>$ git clone:</code> By running this command, create a working copy of a repository in your local. There are several ways to clone a repository.</p>
+<ol>
+<li>https:// clone URLs are available on all repositories, public and private.</li>
+<li>SSH URLs provide access to a Git repository via SSH, a secure protocol.</li>
+</ol>
+<h3 id="basic-snapshotting">Basic Snapshotting:</h3>
+<p><code>$ git status:</code> It simply shows you what&rsquo;s been going on with git add and git commit. The Status messages also include relevant instructions for staging/unstaging files. Sample output showing that on branch “Pluto_Branch” nothing to commit.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>rayan@localhost foobar<span class="o">]</span>$ git status
+</span></span><span class="line"><span class="cl">On branch Pluto-Branch
+</span></span><span class="line"><span class="cl">nothing to commit, working tree clean
+</span></span></code></pre></div><p><code>$ git add:</code> This command adds a change in the working directory to the staging area. It tells Git that you want to include updates to a particular file in the next commit.</p>
+<p><code>$ git add [file-name.txt]:</code> This command stage all changes in [file-name.txt] for the next commit.</p>
+<p><code>$ git add -A:</code> This command will add all new and modified files to the staging area. Along with unwanted/test files</p>
+<p><code>$ git commit -m &quot;[commit message]&quot;:</code> This command is used to commit the changes you have added. -m is used for connecting a commit message to your commit.</p>
+<p><code>$ git rm -r [file-name.txt]:</code> This command is used to remove a file/directory</p>
+<h3 id="branching--merging">Branching &amp; Merging:</h3>
+<p><code>$ git branch:</code> List all the branches associated with the repository. (the asterisk points to the current branch)</p>
+<p><code>$ git branch -a:</code> List all the branches associated with your repository (local and remote)</p>
+<p><code>$ git branch [branch name]:</code> this command is to create a new branch in the current repository</p>
+<p><code>$ git branch -d [branch name]:</code> Used to delete mentioned branch.</p>
+<p><code>$ git push origin --delete [branch name]:</code> This command is used to delete a remote branch</p>
+<p><code>$ git checkout -b [branch name]:</code> Used to create a new branch then switch to it</p>
+<p><code>$ git checkout [branch name]:</code> Used to switch to the mentioned branch.</p>
+<p><code>$ git checkout - :</code> used to switch to the branch last visited.</p>
+<p><code>$ git checkout -- [file-name.txt]:</code> discard all the changes to a file</p>
+<p><code>$ git merge [branch name]:</code> This command is used to integrate changes from another branch.</p>
+<p><code>$ git merge [source branch] [target branch]:</code> Allows us to merge a the source branch into the target branch.</p>
+<h3 id="sharing--updating-projects">Sharing &amp; Updating Projects:</h3>
+<p><code>$ git push origin [branch name]:</code> Pushes all the modified local objects to the remote repository and advances its branches.</p>
+<p><code>$ git push -u origin [branch name]:</code> This command  sets the upstream of the current local branch, so that it tracks [branch name] branch of the remote repository origin.</p>
+<p><code>$ git push origin --delete [branch name]:</code> To delete a remote branch we use this command with —delete flag.</p>
+<p><code>$ git pull:</code> This command fetches the files from the remote repository and merges it with your local one.</p>
+<p><code>$ git pull origin [branch name]:</code> It will fetch the remote branch and merge it into your current local branch.</p>
+<p><code>$ git remote add origin ssh://git@github.com/[username]/[repository-name].git:</code> This command is used to add a remote repository.</p>
+<p><code>$ git remote set-url origin ssh://git@github.com/[username]/[repository-name].git:</code> To set a repository&rsquo;s origin branch to SSH</p>
+<h3 id="inspection--comparison">Inspection &amp; Comparison:</h3>
+<p><code>$ git log:</code> Shows a listing of commits on a branch including author, date, number of commits, current branch, what all things are required to commit, message, content.</p>
+<p><code>$ git log --summary:</code> This command will shows the list of commits with more details.</p>
+<p><code>$ git diff:</code> This command is used in git to track the difference between the changes made on a file.</p>
+</article>
+
+        </main><footer id="footer">
+    Copyright © 2025 Rayan Das
+</footer>
+</body>
+</html>
