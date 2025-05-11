@@ -9,21 +9,26 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout source (with submodules)
         uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.124.1'  # Replace with your version
+          hugo-version: '0.124.1'  # replace with your Hugo version
+          extended: true
 
       - name: Build
-        run: hugo
+        run: hugo --minify
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.HUGO }}
           publish_dir: ./public
 
