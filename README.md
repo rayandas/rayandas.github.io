@@ -18,7 +18,7 @@ git clone git@github.com:rayandas/etch.git themes/etch
 
 Clone rayandas/etch branch's specific branch using:
 ```
-git submodule add --branch 18-Mar-2025-Update git@github.com:rayandas/etch.git template/etch
+git submodule add --branch 18-Mar-2025-Update git@github.com:rayandas/etch.git themes/etch
 ```
 
 Hugo version
