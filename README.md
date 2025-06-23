@@ -21,6 +21,10 @@ Clone rayandas/etch branch's specific branch using:
 git submodule add --branch 18-Mar-2025-Update git@github.com:rayandas/etch.git themes/etch
 ```
 
+Build hugo using:
+```
+hugo
+```
 Hugo version
 ```
 hugo v0.145.0+extended+withdeploy darwin/arm64 BuildDate=2025-02-26T15:41:25Z VendorInfo=brew
